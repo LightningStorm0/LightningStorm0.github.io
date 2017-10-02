@@ -1,0 +1,121 @@
+<html>
+  <style>
+html,body {
+  padding:0;
+  margin:0;
+}
+html {
+  background-color: #4286f4;
+}
+table {
+  height:100%;
+  width:100%;
+}
+body, table {
+  color:white;
+  font-family:sans-serif;
+  text-shadow:black 2px 2px 2px;
+  font-weight:bold;
+}
+td#word {
+  font-size:100px;
+}
+div#topHalf, div#bottomHalf {
+  position:absolute;
+  height:50%;
+  width:100%;
+  left:0;
+}
+div#topHalf {
+  top:0;
+}
+div#bottomHalf {
+  bottom:0;
+}
+div#time, div#score {
+  font-size:20px;
+  position:absolute;
+  top:20px;
+}
+div#score {
+  right:20px;
+}
+div#time {
+  left:20px;
+}
+  </style>
+<script>
+var started = false, points = 0, seconds = 90, donewords = {};
+function $(id) {
+  return document.getElementById(id);
+}
+var words = [
+  "1 Nephi",
+  "2 Nephi",
+  "Jacob",
+  "Rebekah",
+  "Enos",
+  "Jarom",
+  "Omni",
+  "Words of Mormon",
+  "Mosiah",
+  "Alma",
+  "Helaman",
+  "3 Nephi",
+  "4 Nephi",
+  "Mormon",
+  "Ether",
+  "Moroni",
+  "Bible",
+  "Book of Mormon",
+  "Noah",
+  "Adam",
+  "Eve",
+  "FHE",
+  "LDS.org",
+  "General Conference",
+  "Stripling Warriors",
+  "Ammon",
+];
+function secAway() {
+  seconds -= 1;
+  $('time').innerHTML = seconds + ' s';
+  if (seconds > 0) {
+    setTimeout(secAway, 1000);
+  } else {
+    $('word').innerHTML = "TIME'S UP";
+  }
+}
+function randomWord() {
+  var i;
+  do {
+    i = Math.floor(Math.random() * words.length);
+  } while (donewords[i]);
+  $('word').innerHTML = words[i];
+  donewords[i] = 1;
+}
+function screenClick(pt) {
+  if (!started) {
+    started = true;
+    setTimeout(secAway, 1000);
+    randomWord();
+    return;
+  }
+  if (seconds > 0) {
+    if (pt) {
+      points += 1;
+      $('score').innerHTML = points + ' pts';
+    }
+    randomWord();
+  }
+  return false;
+}
+</script>
+  <body>
+    <table cellpadding="0" cellspacing="0"><tr><td id="word" align="center" valign="middle">Tap to Start</td></tr></table>
+    <div id="time">90 s</div>
+    <div id="score">0 pts</div>
+    <div id="topHalf" onclick="return false" ondblclick="return false" ontouchstart="return screenClick(1)" onmousedown="return false"></div>
+    <div id="bottomHalf" onclick="return false" ondblclick="return false" ontouchstart="return screenClick(0)" onmousedown="return false"></div>
+  </body>
+</html>

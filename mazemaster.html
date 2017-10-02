@@ -1,0 +1,251 @@
+<!--
+    _/_/_/_/  _/_/_/  _/      _/  _/      _/  _/  _/      _/  _/_/_/_/_/  _/_/_/_/
+       _/    _/      _/_/    _/  _/_/    _/      _/_/    _/  _/          _/
+      _/    _/_/    _/  _/  _/  _/  _/  _/  _/  _/  _/  _/  _/    _/_/  _/_/_/_/
+ _/  _/    _/      _/    _/_/  _/    _/_/  _/  _/    _/_/  _/      _/        _/
+_/_/_/    _/_/_/  _/      _/  _/      _/  _/  _/      _/  _/_/_/_/_/  _/_/_/_/
+
+    _/  _/   _/  _/_/_/    _/_/_/_/      _/_/_/_/  _/_/_/_/  _/     _/    _/
+   _/ _/        _/    _/  _/            _/        _/    _/  _/_/ _/_/    _/
+  _/_/     _/  _/    _/  _/_/_/_/      _/        _/    _/  _/  _/ _/    _/
+ _/ _/    _/  _/    _/        _/      _/        _/    _/  _/     _/
+_/   _/  _/  _/_/_/    _/_/_/_/  _/  _/_/_/_/  _/_/_/_/  _/     _/    _/
+-->
+<title>Jennings Kids : Games, Mazemaster, and more!</title>
+<link rel="shortcut icon" href="Images/Jlogo.png" />
+
+ <html>
+
+  <style>
+  p { color:#F7EF6A;}
+  b { color:#465C8B;}
+  center { color:#CCCCCC;}
+  div { background-color:#FFFFFF;}
+  </style>
+
+ <div>
+
+  <font size=10>
+
+  <center><img src="Images/Jenningskids.png"></img></center>
+  </font>
+
+  <right></right>
+
+  <center><a href="index.html"><img src="Images/Home.png"</img></a><a href="games.html"><img src="Images/Games.png"></img></a><a href="mazemaster.html"><img src="Images/Mazemaster.png"></img></a></center>
+
+
+ <hr/>
+
+</div>
+
+<center>
+<!DOCTYPE>
+<style>
+div.cell {
+ border-color:white;
+ border-style:solid;
+ border-width:2px;
+ height:15px;
+ width:15px;
+ display:inline-block;
+ color:red;
+ text-align:center;
+ font-size:12px;
+ position:absolute;
+}
+div#mazeholder { position:absolute; left:50%; top:150px; }
+div#maze { position:absolute; }
+div.b { border-bottom-color:black; }
+div.r { border-right-color:black; }
+div.t { border-top-color:black; }
+div.l { border-left-color:black; }
+div.home { background:#8f8; }
+div.goal { background:#f88; }
+div#time { position:absolute; font-size:20px; width:200px; text-align:left; }
+div#reload { position:absolute; text-align:right; visibility:hidden; }
+div#difficulty { font-size:30px; font-weight:bold; text-align:center; position:relative; top:250px;}
+</style>
+<div id="difficulty"><a href="javascript:setupField(20, 20)">Easy</a> or <a href="javascript:setupField(30, 50)">Hard</a> or <a href="javascript:setupField(40, 80, 1)">Survival</a></div>
+<div id="mazeholder">
+  <div id="maze"><div id="time"></div></div>
+</div>
+<div id="reload">(Ctrl or Command-R to <a href="javascript:window.location.reload()">Reload</a>)</div>
+<script>
+function setupField(ROWS, COLS, ENEMY) {
+ document.getElementById("difficulty").style.display = "none";
+
+ var mazeElt = document.getElementById('maze');
+ mazeElt.style.left = '-'+(COLS*9.5)+'px';
+ var timeElt = document.getElementById('time');
+ timeElt.style.left = '20px';
+ timeElt.style.top = (ROWS*19+20)+'px';
+ var reloadElt = document.getElementById('reload');
+ reloadElt.style.left = '20px';
+ reloadElt.style.width = (COLS*19-10)+'px';
+ reloadElt.style.top = (ROWS*19+20)+'px';
+
+ var BWALL = 1;
+ var RWALL = 2;
+
+ var mymoves = [];
+
+ var cells = [];
+ var walls = [];
+ var myx = 0;
+ var myy = 0;
+ var nme_x = -1;
+ var nme_y = -1;
+ var enemyStarted = false;
+ var enemyDelay = 1000;
+ var begintime = new Date();
+ var ended = false;
+
+ var cellValues = [];
+ for (var y=0; y<ROWS; ++y) {
+  cellValues[y] = [];
+  walls[y] = [];
+  for (var x=0; x<COLS; ++x) {
+   cellValues[y][x] = y*COLS + x;
+   walls[y][x] = BWALL + RWALL;
+  }
+ }
+
+ var erasures = 0;
+ while (erasures<ROWS*COLS-1) {
+  var x = Math.floor(Math.random()*COLS);
+  var y = Math.floor(Math.random()*ROWS);
+  var d = Math.floor(Math.random()*2);
+  var x2 = x + d;
+  var y2 = y + (1-d);
+  if (x2<COLS && y2<ROWS && cellValues[y][x]!=cellValues[y2][x2]) {
+   walls[y][x] -= d ? RWALL : BWALL;
+   var old = cellValues[y2][x2];
+   for (var i=0; i<ROWS; ++i) {
+    for (var j=0; j<COLS; ++j) {
+     if (cellValues[i][j]==old)
+      cellValues[i][j]=cellValues[y][x];
+    }
+   }
+   erasures++;
+  }
+ }
+
+ var wallmap = {};
+ wallmap[0] = '';
+ wallmap[BWALL] = 'b ';
+ wallmap[RWALL] = 'r ';
+ wallmap[BWALL+RWALL] = 'b r ';
+ var mElt = document.getElementById('maze');
+ for (var y=0; y<ROWS; ++y) {
+  var row = document.createElement('div');
+  cells[y] = [];
+  for (var x=0; x<COLS; ++x) {
+   var e = document.createElement('div');
+   e.className = (x==0?"l ":"")+(y==0?"t ":"")+wallmap[walls[y][x]]+"cell";
+   e.style.left = x*19+"px";
+   e.style.top = y*19+"px";
+   if (x==0 && y==0) e.className += " home";
+   if (x==COLS-1 && y==ROWS-1 && !ENEMY) e.className += " goal";
+   row.appendChild(e);
+   cells[y][x] = e
+  }
+  mElt.appendChild(row);
+ }
+
+ cells[myy][myx].innerHTML = "\u25cf";
+
+ function drawCell(x, y) {
+  if (x<0 || y<0 || x>=COLS || y>=ROWS) return;
+
+  var indicator;
+  if (x==myx && y==myy) {
+   indicator = (x==nme_x && y==nme_y) ? "X" : "\u25cf";
+  } else {
+   indicator = (x==nme_x && y==nme_y) ? "O" : "";
+  }
+  cells[y][x].innerHTML = indicator;
+  if ((ENEMY && myx==nme_x && myy==nme_y) || (!ENEMY && myx==COLS-1 && myy==ROWS-1)) {
+   ended = true;
+   reloadElt.style.visibility="Visible";
+  }
+ }
+
+ function moveMe(newx, newy) {
+  var oldx = myx;
+  var oldy = myy;
+  myx = newx;
+  myy = newy;
+  drawCell(oldx, oldy);
+  drawCell(myx, myy);
+ }
+
+ function moveEnemy(newx, newy) {
+  var oldx = nme_x;
+  var oldy = nme_y;
+  nme_x = newx;
+  nme_y = newy;
+  drawCell(oldx, oldy);
+  drawCell(nme_x, nme_y);
+ }
+
+ function advanceEnemy() {
+  if (ended) return;
+
+  var move = mymoves.shift();
+  if (move=='up') {
+   moveEnemy(nme_x, nme_y-1);
+  } else if (move=='left') {
+   moveEnemy(nme_x-1, nme_y);
+  } else if (move=='down') {
+   moveEnemy(nme_x, nme_y+1);
+  } else if (move=='right') {
+   moveEnemy(nme_x+1, nme_y);
+  }
+  setTimeout(advanceEnemy, enemyDelay);
+
+  if (enemyDelay > 100) enemyDelay = enemyDelay * 0.98;
+ }
+
+ window.onkeydown = function(e) {
+  if (ended) return;
+
+  if (e.keyCode==38 && myy>0 && !(BWALL & walls[myy-1][myx])) {
+   //up
+   moveMe(myx, myy-1);
+   mymoves.push('up');
+  } else if (e.keyCode==37 && myx>0 && !(RWALL & walls[myy][myx-1])) {
+   //left
+   moveMe(myx-1, myy);
+   mymoves.push('left');
+  } else if (e.keyCode==40 && myy<ROWS-1 && !(BWALL & walls[myy][myx])) {
+   //down
+   moveMe(myx, myy+1);
+   mymoves.push('down');
+  } else if (e.keyCode==39 && myx<COLS-1 && !(RWALL & walls[myy][myx])) {
+   //right
+   moveMe(myx+1, myy);
+   mymoves.push('right');
+  }
+
+  if (mymoves.length == 20 && !enemyStarted && ENEMY) {
+   enemyStarted = true;
+   moveEnemy(0, 0);
+   advanceEnemy();
+  }
+ };
+
+ function doTime() {
+  if (ended) return;
+
+  var tenths = Math.floor(((new Date())-begintime)/100);
+  timeElt.innerHTML = Math.floor(tenths/10)+"."+(tenths%10)+" sec";
+  setTimeout(doTime, 100);
+ }
+ doTime();
+}
+</script>
+
+</center>
+
+ </html>
