@@ -1,4 +1,4 @@
 # LightningStorm0.github.io
-<b class="navbar-brand" style="color:#ffffff;">
+<b style="color:#ffffff;">
   Charity Miner
 </b>
