@@ -1,6 +1,2 @@
 # LightningStorm0.github.io
-<b style="color:#ffffff;">
-  Charity Miner
-</b>
-This is a site that let's people mine bitcoin for charity!
-There is no donation required and can be left open while away from your device!
+This is my personal website, it will eventually have some games and stuff, maybe a blog.
