@@ -6,3 +6,7 @@ src: url("demode/Demode.ttf");
 font-family: "Silicone";
 src: url("silicone/Silicone.ttf");
 }
+@font-face {
+font-family: "BlackBruno";
+src: url("black_bruno/Black Bruno.otf");
+}
