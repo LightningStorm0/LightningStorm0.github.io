@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Warren Jennings</title>
+    <title>Home</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/uikit.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
   </head>
-  <body style="background-image: url('images/background1.jpg'); min-height: 100vh;" data-uk-parallax="{bg: '-200'}">
-    <div uk-grid>
+  <body style="background-color:#262626; min-height: 100vh;">
+
+    <a type="button" href="#" uk-icon="icon: menu" style="position:fixed;left:10px;top:10px;"></a>
+    <div uk-drop="mode: click;" style="position:fixed;left:10px;">
+      <ul class="uk-iconnav uk-iconnav-vertical">
+        <li><a href="index.html" uk-icon="icon: home"></a></li>
+        <li><a href="blog.html" uk-icon="icon: file-text"></a></li>
+        <li><a href="info.html" uk-icon="icon: info"></a></li>
+        <li><a href="ServerPass.html" uk-icon="icon: server"></a></li>
+      </ul>
+    </div>
+    <div style="padding-left:25vw; padding-right:25vw; padding-bottom:2vw;">
       <div>
-        <div class="uk-card">
-          <div class="uk-card-header">
-            <h3 class="uk-card-title">
-              Title
-            </h3>
+        <h1 style="font-family:Silicone; color:#ffffff; text-align:center; font-size:4vw; padding-top:1vw;">Warren Jennings</h1>
+      </div>
+
+
+      <div>
+
+        <a href="blog.html" class="uk-card uk-card-small uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin uk-card-hover" style="text-decoration:none; color:inherit;" uk-grid>
+          <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+            <img src="images/fountain-pen.jpg" alt="" uk-cover>
+            <canvas width="600" height="400"></canvas>
           </div>
-          <div class="uk-card-body">
-            Stuff and things
+          <div>
+            <div class="uk-card-body">
+              <h3 class="uk-card-title">Blog</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
           </div>
-          <div class="uk-card-footer">
-            Footer
+        </a>
+
+        <a href="games.html" class="uk-card uk-card-small uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin uk-card-hover" style="text-decoration:none; color:inherit;" uk-grid>
+          <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+            <img src="images/chess.jpg" alt="" uk-cover>
+            <canvas width="600" height="400"></canvas>
           </div>
-        </div>
+          <div>
+            <div class="uk-card-body">
+              <h3 class="uk-card-title">Games</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="ServerPass.html" class="uk-card uk-card-small uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin uk-card-hover" style="text-decoration:none; color:inherit;" uk-grid>
+          <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+            <img src="images/minecraft.png" alt="" uk-cover>
+            <canvas width="600" height="400"></canvas>
+          </div>
+          <div>
+            <div class="uk-card-body">
+              <h3 class="uk-card-title">Minecraft Server</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
+          </div>
+        </a>
+
       </div>
     </div>
   </body>
