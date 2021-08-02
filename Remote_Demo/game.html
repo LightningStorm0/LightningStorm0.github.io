@@ -21,7 +21,11 @@ var x = 0;
 var peer = new Peer((Math.random().toString(36) + '0000000000000000000').substr(2, 6), {
       host: 'peer.jenningskids.com',
       port: 443,
-      path: '/game'
+      path: '/game',
+      config: {'iceServers': [
+        { url: 'turn:52.25.48.5:3478', credential: 'test:test123' },
+        { url: 'turn:52.25.48.5:3478', credential: 'test:test123' }
+      ]}
     });
 
 var peerID = "Loading...";
