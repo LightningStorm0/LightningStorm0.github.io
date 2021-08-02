@@ -24,7 +24,7 @@ var peer = new Peer((Math.random().toString(36) + '0000000000000000000').substr(
       path: '/game',
       config: {'iceServers': [
         { url: 'turn:52.25.48.5:3478', credential: 'test:test123' },
-        { url: 'turn:52.25.48.5:3478', credential: 'test:test123' }
+        { url: 'stun:52.25.48.5:3478', credential: 'test:test123' }
       ]}
     });
 
