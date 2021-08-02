@@ -23,8 +23,8 @@ var peer = new Peer((Math.random().toString(36) + '0000000000000000000').substr(
       port: 443,
       path: '/game',
       config: {'iceServers': [
-        { url: 'turn:52.25.48.5:3478', credential: 'test:test123' },
-        { url: 'stun:52.25.48.5:3478', credential: 'test:test123' }
+        { url: 'turn:test@52.25.48.5:3478', credential: 'test123' },
+        { url: 'stun:test@52.25.48.5:3478', credential: 'test123' }
       ]}
     });
 
